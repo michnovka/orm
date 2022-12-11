@@ -51,6 +51,8 @@ class GH10300Test extends OrmFunctionalTestCase
             ->setMaxResults(1)
             ->getSingleResult();
 
-        var_dump($report->getPaymentModules()->toArray());
+        self::assertInstanceOf(PaymentRequestReport::class, $report);
+        $paymentModules = $report->getPaymentModules();
+        self::assertEquals(2, $paymentModules->count());
     }
 }
