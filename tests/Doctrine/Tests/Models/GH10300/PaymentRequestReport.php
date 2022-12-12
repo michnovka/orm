@@ -6,6 +6,7 @@ namespace Doctrine\Tests\Models\GH10300;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
@@ -21,6 +22,9 @@ class PaymentRequestReport extends Report
      * @var Collection<int, PaymentModule> $paymentModules
      */
     private Collection $paymentModules;
+
+    /** @Column(type="boolean") */
+    private bool $includeInvoices = false;
 
     public function __construct()
     {
@@ -44,6 +48,18 @@ class PaymentRequestReport extends Report
     public function removePaymentModule(PaymentModule $paymentModule): self
     {
         $this->paymentModules->removeElement($paymentModule);
+
+        return $this;
+    }
+
+    public function getIncludeInvoices(): bool
+    {
+        return $this->includeInvoices;
+    }
+
+    public function setIncludeInvoices(bool $includeInvoices): self
+    {
+        $this->includeInvoices = $includeInvoices;
 
         return $this;
     }

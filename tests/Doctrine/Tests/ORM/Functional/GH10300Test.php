@@ -6,6 +6,7 @@ namespace Doctrine\Tests\ORM\Functional;
 
 use Doctrine\Tests\Models\GH10300\PaymentModule;
 use Doctrine\Tests\Models\GH10300\PaymentRequestReport;
+use Doctrine\Tests\Models\GH10300\PaypalPaymentModule;
 use Doctrine\Tests\Models\GH10300\Report;
 use Doctrine\Tests\OrmFunctionalTestCase;
 
@@ -20,14 +21,15 @@ class GH10300Test extends OrmFunctionalTestCase
         $this->createSchemaForModels(
             Report::class,
             PaymentRequestReport::class,
-            PaymentModule::class
+            PaymentModule::class,
+            PaypalPaymentModule::class
         );
     }
 
     public function testInheritanceMapping(): void
     {
-        $paymentModule1 = new PaymentModule();
-        $paymentModule2 = new PaymentModule();
+        $paymentModule1 = new PaypalPaymentModule('name1');
+        $paymentModule2 = new PaypalPaymentModule('name2');
 
         $this->_em->persist($paymentModule1);
         $this->_em->persist($paymentModule2);
